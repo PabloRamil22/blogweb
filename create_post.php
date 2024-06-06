@@ -14,14 +14,27 @@ if (!isset($_SESSION['user_id'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST['title'];
     $body = $_POST['body'];
+    $image = $_FILES['image'];
 
-    $post = new Post();
-    $post->title = $title;
-    $post->body = $body;
-    $post->user_id = $_SESSION['user_id']; 
-    $post->save();
+    // Directorio donde se almacenarán las imágenes subidas
+    $targetDir = "uploads/";
+    $targetFile = $targetDir . basename($image['name']);
 
-    header('Location: index.php');
-    exit;
+    // Mueve el archivo subido al directorio de destino
+    if (move_uploaded_file($image['tmp_name'], $targetFile)) {
+        // Crear una nueva instancia de Post
+        $post = new Post();
+        $post->title = $title;
+        $post->body = $body;
+        $post->image = $targetFile; // Guarda la ruta de la imagen en la base de datos
+        $post->user_id = $_SESSION['user_id'];
+        $post->save();
+        
+        // Redirige de vuelta a la página principal
+        header('Location: index.php');
+        exit;
+    } else {
+        echo "Error al subir el archivo.";
+    }
 }
 ?>
