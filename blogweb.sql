@@ -25,10 +25,10 @@ DROP TABLE IF EXISTS `categories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `categories` (
-  `idcategories` int NOT NULL AUTO_INCREMENT,
+  `categories_id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `idusers` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idcategories`)
+  `user_id` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`categories_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -49,12 +49,12 @@ DROP TABLE IF EXISTS `coments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `coments` (
-  `idcoments` int NOT NULL AUTO_INCREMENT,
+  `coments_id` int NOT NULL AUTO_INCREMENT,
   `comment` varchar(255) DEFAULT NULL,
   `create_date` datetime DEFAULT CURRENT_TIMESTAMP,
-  `idusers` int DEFAULT NULL,
-  `idposts` int DEFAULT NULL,
-  PRIMARY KEY (`idcoments`)
+  `user_id` int DEFAULT NULL,
+  `post_id` int DEFAULT NULL,
+  PRIMARY KEY (`coments_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -75,13 +75,13 @@ DROP TABLE IF EXISTS `posts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `posts` (
-  `idposts` int NOT NULL AUTO_INCREMENT,
+  `post_id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(45) DEFAULT NULL,
   `body` longtext,
   `image` varchar(45) DEFAULT NULL,
   `create_date` datetime DEFAULT CURRENT_TIMESTAMP,
-  `idusers` int DEFAULT NULL,
-  PRIMARY KEY (`idposts`)
+  `user_id` int DEFAULT NULL,
+  PRIMARY KEY (`post_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -102,9 +102,9 @@ DROP TABLE IF EXISTS `posts_categories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `posts_categories` (
-  `idposts` int NOT NULL,
-  `idcategories` int NOT NULL,
-  PRIMARY KEY (`idposts`,`idcategories`)
+  `post_id` int NOT NULL,
+  `categories_id` int NOT NULL,
+  PRIMARY KEY (`post_id`,`categories_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -125,12 +125,12 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
-  `idusers` int NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(245) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `password` varchar(200) DEFAULT NULL,
   `image` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`idusers`)
+  PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -153,4 +153,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-05 20:12:09
+-- Dump completed on 2024-06-06 17:24:17

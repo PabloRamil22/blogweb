@@ -1,0 +1,20 @@
+{
+    "name": "pablo/blogweb",
+    "description": "blog multiusuario",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "PabloRamil22",
+            "email": "pabloramil2000@gmail.com"
+        }
+    ],
+    "require": {
+        "illuminate/database": "^11.10",
+        "illuminate/events": "^11.10"
+    }
+}
