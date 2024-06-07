@@ -2,7 +2,7 @@
 
 use App\Models\Post;
 use App\Models\Categorias;
-
+use App\Models\User;
 require 'vendor/autoload.php';
 require 'config.php';
 
@@ -11,7 +11,16 @@ session_start();
 $posts = Post::with('user')->get();
 $categories = Categorias::all();
 $isLoggedIn = isset($_SESSION['user_id']);
+$userName = '';
+$userImage = '';
 
+if ($isLoggedIn) {
+    $user = User::find($_SESSION['user_id']);
+    if ($user) {
+        $userName = $user->name;
+        $userImage = $user->image;
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -23,6 +32,14 @@ $isLoggedIn = isset($_SESSION['user_id']);
     <title>Foro</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .profile-image {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
 </head>
 
 <body>
@@ -35,14 +52,22 @@ $isLoggedIn = isset($_SESSION['user_id']);
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <?php if ($isLoggedIn) : ?>
-                            <a class="nav-link" href="logout.php">Cerrar sesión</a>
-                        <?php else : ?>
-                            <a class="nav-link" href="login.php">Inicio de sesión</a>
-                        <?php endif; ?>
-                    </li>
+                <ul class="navbar-nav ml-auto align-items-center">
+                    <?php if ($isLoggedIn) : ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="profile">
+                                <img src="<?= htmlspecialchars($userImage) ?>" alt="Perfil" class="profile-image">
+                                <?= htmlspecialchars($userName) ?>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="logout">Cerrar sesión</a>
+                        </li>
+                    <?php else : ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="login">Inicio de sesión</a>
+                        </li>
+                    <?php endif; ?>
                 </ul>
             </div>
         </div>
@@ -59,7 +84,6 @@ $isLoggedIn = isset($_SESSION['user_id']);
                 <h1 class="my-4">Posts</h1>
 
                 <!-- Blog Post -->
-                <!-- Blog Post -->
                 <?php foreach ($posts as $post) : ?>
                     <div class="card mb-4">
                         <!-- Ajusta la ruta de la imagen en la etiqueta img -->
@@ -71,11 +95,10 @@ $isLoggedIn = isset($_SESSION['user_id']);
                         </div>
                         <div class="card-footer text-muted">
                             Publicado el <?= date("d/m/Y", strtotime($post->create_date)) ?> por
-                            <a href="#"><?= $post->user->name ?></a>
+                            <a href="user_posts?user_id=<?= $post->user->id ?>"><?= $post->user->name ?></a>
                         </div>
                     </div>
                 <?php endforeach; ?>
-
 
             </div>
 
@@ -102,9 +125,9 @@ $isLoggedIn = isset($_SESSION['user_id']);
                         <div class="row">
                             <div class="col-lg-6">
                                 <ul class="list-unstyled mb-0">
-                                    <?php foreach ($categories as $categoria) : ?>
+                                    <?php foreach ($categories as $category) : ?>
                                         <li>
-                                            <a href="#"><?= $categoria->name ?></a>
+                                            <a href="#"><?= $category->name ?></a>
                                         </li>
                                     <?php endforeach; ?>
                                 </ul>
@@ -113,7 +136,6 @@ $isLoggedIn = isset($_SESSION['user_id']);
                     </div>
                 </div>
 
-                <!-- Create Post Form -->
                 <!-- Create Post Form -->
                 <?php if ($isLoggedIn) : ?>
                     <div class="card my-4">
@@ -129,6 +151,14 @@ $isLoggedIn = isset($_SESSION['user_id']);
                                     <textarea class="form-control" id="body" name="body" rows="3" required></textarea>
                                 </div>
                                 <div class="form-group">
+                                    <label for="category_id">Categoría:</label>
+                                    <select class="form-control" id="category_id" name="category_id" required>
+                                        <?php foreach ($categories as $category) : ?>
+                                            <option value="<?= $category->id ?>"><?= $category->name ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <label for="image">Imagen:</label>
                                     <input type="file" class="form-control-file" id="image" name="image">
                                 </div>
@@ -137,7 +167,6 @@ $isLoggedIn = isset($_SESSION['user_id']);
                         </div>
                     </div>
                 <?php endif; ?>
-
 
                 <!-- Create Category Form -->
                 <?php if ($isLoggedIn) : ?>

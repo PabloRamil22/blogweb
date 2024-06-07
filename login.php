@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($user && $password === $user->password) { 
         $_SESSION['user_id'] = $user->id;
-        header('Location: index.php');
+        header('Location: index');
         exit;
     } else {
         $error = 'Invalid email or password';
