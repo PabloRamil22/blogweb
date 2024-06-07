@@ -29,7 +29,7 @@ CREATE TABLE `categories` (
   `name` varchar(255) DEFAULT NULL,
   `user_id` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`categories_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,6 +38,7 @@ CREATE TABLE `categories` (
 
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
+INSERT INTO `categories` VALUES (1,'Medieval','1');
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,7 +83,7 @@ CREATE TABLE `posts` (
   `create_date` datetime DEFAULT CURRENT_TIMESTAMP,
   `user_id` int DEFAULT NULL,
   PRIMARY KEY (`post_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,6 +92,7 @@ CREATE TABLE `posts` (
 
 LOCK TABLES `posts` WRITE;
 /*!40000 ALTER TABLE `posts` DISABLE KEYS */;
+INSERT INTO `posts` VALUES (1,'Navas de Tolosa','La victoria de los tres reyes cristianos en el 1212',NULL,'2024-06-06 18:05:05',1),(2,'La defensa de Cartagena','Blas de Lezo defendiendo Cartagena de Indias, medio hombre.',NULL,'2024-06-06 19:55:20',1),(3,'Alzamineto del 2 de mayo','El pueblo madrileño se alza en armas frente a los sucios franceses','uploads/2 de mayo.jpg','2024-06-06 20:26:35',1);
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -130,7 +132,7 @@ CREATE TABLE `users` (
   `email` varchar(100) DEFAULT NULL,
   `password` varchar(200) DEFAULT NULL,
   `image` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`user_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -153,4 +155,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-06 17:24:17
+-- Dump completed on 2024-06-07 15:51:41
